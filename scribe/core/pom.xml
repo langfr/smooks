@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.milyn</groupId>
         <artifactId>scribe-parent</artifactId>
-        <version>1.6-SNAPSHOT</version>
+	<version>1.7-SNAPSHOT</version>
         <relativePath>../scribe-parent/pom.xml</relativePath>
     </parent>
     <name>Milyn :: Scribe :: Core</name>
@@ -16,15 +16,6 @@
         <dependency>
             <groupId>org.milyn</groupId>
             <artifactId>milyn-commons</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.milyn</groupId>
-            <artifactId>testres</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>

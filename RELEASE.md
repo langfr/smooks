@@ -28,11 +28,8 @@ For others to be able to verify the signature, in our case Nexus must be able to
 In the example above we are using the _pub_ identifer.
 
 ### Update the project version number
-We need to update the project version number. This need to be done once for in the root project and once for the
-smooks-examples module. The reason for this is that the smooks-examples module does has a different parent.
+We need to update the project version number using the **versions** Maven plugin. To do this, `cd` into the `smooks-parent` directory and execute the following command.
 
-    mvn versions:set -DnewVersion=newVersionGoesHere
-    cd smooks-examples
     mvn versions:set -DnewVersion=newVersionGoesHere
 
 If all looks good then you can remove the backup files using:
@@ -43,11 +40,15 @@ And if you are not happy you can revert using:
 
     mvn versions:revert
 
+Note you may need to execute the above `commit` or `revert` commands multiple time, from the root of the project and from the `smooks-parent` directory. They don't seem to work the same as the `set` command.
+
 When you are done you should commit and tag.
 
 ### Deploy artifacts to Codehaus Nexus repository
 
 There are 2 ways of doing this, depending on the OS you are running on.  In either case, this should build and upload all artifacts to the [Codehaus Nexus maven Repository](https://nexus.codehaus.org) ([see HAUSEMATE docs for more details](http://docs.codehaus.org/display/HAUSMATES/Codehaus+Maven+Repository+Usage+Guide)), from which we can test and hopefully release the artifacts.
+
+___Note: Before deploying, attempt to manually log into the Nexus web interface at https://nexus.codehaus.org. If login fails, try logging into [Xircles](http://xircles.codehaus.org/), resetting the password if that fails. Once you can log into Xircles, you should be able to log into Nexus.___.
 
 ___Note: The Codehaus Nexus repo often runs into disk space issues, causing the deploys to fail with a 500 error.  See [Jira HAUS-2339](https://jira.codehaus.org/browse/HAUS-2339)___.
 
@@ -138,10 +139,10 @@ Now you are ready to run the maven deploy goal:
 ### Releasing artifacts from Codehaus Nexus repository
 
 You log into the Codehaus Nexus repo using your [Xircles](http://xircles.codehaus.org/) userid and password.  From there, take a look at the “Staging Repository”. The staging repository is where you can inspect what was uploaded and make sure that everything looks peachy.
-If it doesn't, you can drop the repository and fix the issue and deploy again. Once you think everything is in order you need to “Close” the repository. Closing will run a number of verification
+If it doesn't, you can drop the repository and fix the issue and deploy again. Once you think everything is in order you need to “**Close**” the repository. Closing will run a number of verification
 rules, among them verifying the signatures of the artifacts. Again if something fails you must fix and the drop and deploy again.
 
-At this point, the artifacts are not available from the Codehaus Staging repository, which means people will be able to test these artifacts.  If all goes well (no bugs etc), you should now be able to release the artifacts using the “Release” button.  This will make the artifacts available first on the local nexus which will later sync to maven central.
+If successfull, the artifacts are now available from the Codehaus Staging repository. From there, people will be able to test these artifacts.  If all goes well (no bugs etc), you should now be able to release the artifacts using the “**Release**” button.  This will make the artifacts available first on the local nexus which will later sync to maven central.
 
 ### Tag the release
 
@@ -154,3 +155,7 @@ Optionally verify the tag:
 Push the tag:
 
     git push upstream vx.x.x
+
+### Prepare for next development iteration
+
+Once tagging is complete, update the versions in the project POM files for the next release (if necessary). The instructions for doing this (using the **versions** plugin) are outlined above in section titled "**Update the project version number**".

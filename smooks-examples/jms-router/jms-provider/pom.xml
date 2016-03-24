@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.milyn</groupId>
         <artifactId>milyn-smooks-example-jms-router</artifactId>
-        <version>1.6-SNAPSHOT</version>
+	<version>1.7-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -18,7 +18,6 @@
             <plugin>
                 <groupId>org.apache.activemq.tooling</groupId>
                 <artifactId>maven-activemq-plugin</artifactId>
-                <version>4.1.2</version>
                 <configuration>
                     <configFile>./activemq.xml</configFile>
                     <fork>false</fork>
